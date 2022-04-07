@@ -1,0 +1,27 @@
+/**
+* Ces classes permettent de masquer des composants entiers en fonction de la taille de l'écran
+*/
+
+.hide-on-smartphones {
+  @include smartphones-only {
+    display: none;
+  }
+}
+
+.hide-on-tablets-and-smartphones {
+  @include smartphones-and-tablets-only {
+    display: none;
+  }
+}
+
+.hide-on-tablets-and-computers {
+  @include tablets-and-bigger-only {
+    display: none;
+  }
+}
+
+.hide-on-computers {
+  @include laptops-and-bigger-only {
+    display: none;
+  }
+}

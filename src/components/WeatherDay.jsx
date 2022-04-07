@@ -9,6 +9,8 @@ import metOffice from "../images/metOffice.png";
 import openWeatherMap from "../images/openWeatherMap.png";
 import weatherUnderground from "../images/weatherUnderground.png";
 import worldWeatherOnline from "../images/worldWeatherOnline.png";
+import Arrow from "@elsdoerfer/react-arrow";
+import Link from "react-router-dom/es/Link";
 
 export default (props) => {
 
@@ -16,7 +18,7 @@ export default (props) => {
     const index = props.match.params.index;
     const [region, setRegion] = useState(firstRegion);
     const [response, setResponse] = useState({});
-    console.log("by date",response);
+    console.log("by date", response);
 
     useEffect(() => {
         (async function () {
@@ -29,12 +31,17 @@ export default (props) => {
         })()
     }, [region]);
 
-    return(<>
+    return (<>
         <div className={"container"}>
             <div><h1 className={"title"}>Info Weather</h1></div>
 
 
-            <div>
+            <div className={""}>
+                <Link to={`/`}>
+                    <div className={"arrow"}>
+                        <Arrow angle={270} length={30} style={{width: '30px'}}/>
+                    </div>
+                </Link>
                 <select className={"select"} value={region} onChange={async (e) => {
                     setRegion(e.target.value);
                 }}>
@@ -62,23 +69,24 @@ export default (props) => {
                 </div>
             </div>
 
-           <div className={"middle"}>{response.consolidated_weather && <div className={"weather"}>
+            <div className={"middle"}>{response.consolidated_weather && <div className={"weather"}>
                 <ComponentForDay item={response.consolidated_weather[index]} region={region}/>
             </div>}
-               <div className={"sources"}> <span className={"bold"}>Sources</span>
-                   {response.sources && response.sources.map(item=>(
-                       <div>
-                           {item.title==="BBC" && <img className={"logo"} src={BBC}/>}
-                           {item.title==="Forecast.io" && <img className={"logo"} src={forecast}/>}
-                           {item.title==="HAMweather" && <img className={"logo"} src={hamWeather}/>}
-                           {item.title==="Met Office" && <img className={"logo"} src={metOffice}/>}
-                           {item.title==="OpenWeatherMap" && <img className={"logo"} src={openWeatherMap}/>}
-                           {item.title==="Weather Underground" && <img className={"logo"} src={weatherUnderground}/>}
-                           {item.title==="World Weather Online" && <img className={"logo"} src={worldWeatherOnline}/>}
-                         <a href={item.url} className={"link"}>  {item.title} </a>
-                       </div>))}
-               </div>
-           </div>
+                <div className={"sources"}><span className={"bold"}>Sources</span>
+                    {response.sources && response.sources.map(item => (
+                        <div>
+                            {item.title === "BBC" && <img className={"logo"} src={BBC}/>}
+                            {item.title === "Forecast.io" && <img className={"logo"} src={forecast}/>}
+                            {item.title === "HAMweather" && <img className={"logo"} src={hamWeather}/>}
+                            {item.title === "Met Office" && <img className={"logo"} src={metOffice}/>}
+                            {item.title === "OpenWeatherMap" && <img className={"logo"} src={openWeatherMap}/>}
+                            {item.title === "Weather Underground" && <img className={"logo"} src={weatherUnderground}/>}
+                            {item.title === "World Weather Online" &&
+                                <img className={"logo"} src={worldWeatherOnline}/>}
+                            <a href={item.url} className={"link"}>  {item.title} </a>
+                        </div>))}
+                </div>
+            </div>
 
             <div className={"copyright"}>© Weather, Inc. 2021. We love weather</div>
 

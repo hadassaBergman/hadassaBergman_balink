@@ -1,0 +1,84 @@
+/**
+  * Ces mixins peuvent êtres utilisés au sein d'une classe pour définir des règles particulières en fonction de la taille de l'écran
+  */
+
+//$smartphone-portrait: 776px;
+$smartphone-portrait: 576px;
+$tablet-landscape: 1024px;
+$laptop: 1280px;
+$flashcard-size:1440px;
+
+@mixin flashcard-margin-proportional {
+  @media (min-width: #{$flashcard-size})  {
+    @content;
+  }
+}
+
+
+@mixin flashcard-small-margin {
+  @media (min-width: #{0px}) and (max-width: #{1599}) {
+    @content;
+  }
+}
+
+@mixin flashcard-medium-margin {
+  @media (min-width: #{1599px}) and (max-width: #{1899}) {
+    @content;
+  }
+}
+
+@mixin flashcard-large-margin {
+  @media (min-width: #{1899px}) {
+    @content;
+  }
+}
+
+
+@mixin flashcard-height {
+  @media (min-height: #{0px}) and (max-height: #{768px}) {
+    @content;
+  }
+}
+
+
+@mixin smartphones-only {
+  @media (min-width: #{0px}) and (max-width: #{$smartphone-portrait}) {
+    @content;
+  }
+}
+
+@mixin smartphones-and-tablets-only {
+  @media (min-width: #{0px}) and (max-width: #{$tablet-landscape}) {
+    @content;
+  }
+}
+
+@mixin tablets-only {
+  @media (min-width: $smartphone-portrait + 1) and (max-width: #{$tablet-landscape}) {
+    @content;
+  }
+}
+
+@mixin tablets-and-bigger-only {
+  @media (min-width: $smartphone-portrait + 1) {
+    @content;
+  }
+}
+
+@mixin laptops-only {
+  @media (min-width: $tablet-landscape + 1) and (max-width: #{$laptop}) {
+    @content;
+  }
+}
+
+@mixin laptops-and-bigger-only {
+  @media (min-width: $tablet-landscape + 1) {
+    @content;
+  }
+}
+
+@mixin desktop-and-bigger-only {
+  @media (min-width: $laptop + 1) {
+    @content;
+  }
+}

@@ -1,8 +1,9 @@
-import React, {useContext, useEffect, useState} from "react";
-import {format} from "date-fns";
+import React, { useEffect, useState} from "react";
 import axios from "axios";
 import ComponentForDay from "./ComponentForDay";
 import {useTranslation} from "react-i18next";
+import Header from "./Header";
+import SelectCountry from "./SelectCountry";
 export {LandingPage};
 
 const LandingPage = (props) => {
@@ -10,7 +11,12 @@ const LandingPage = (props) => {
     const [region, setRegion] = useState("2459115");
     const [response, setResponse] = useState({});
     console.log(response);
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    console.log(i18n);
+    function changeLanguage (lng) {
+        i18n.changeLanguage(lng);
+        window.localStorage.setItem('language', lng);
+    };
 
 
     useEffect(() => {
@@ -29,40 +35,25 @@ const LandingPage = (props) => {
 
 
         <div className={"container"}>
-            <div><h1 className={"title"}>{t("Info Weather")}</h1></div>
+            <select className={"select"} value={i18n.resolvedLanguage} onChange={async (e) => {
+                console.log("hit");
+                changeLanguage(e.target.value);
+            }}>
+                <option value={"en"}> English </option>
+                <option value={"hb"}> Hebrew </option>
+            </select>
 
+            <div><h1 className={"title"}>{t("title")}</h1></div>
 
             <div>
-                <select className={"select"} value={region} onChange={async (e) => {
-                    setRegion(e.target.value);
-                }}>
-                    <option value={""} disabled={true}> Select a country</option>
-                    <option value={"2459115"}> New York</option>
-                    <option value={"2442047"}> Los Angeles</option>
-                    <option value={"610264"}> Marseille</option>
-                    <option value={"753692"}> Barcelona</option>
-                    <option value={"721943"}> Rome</option>
-                </select>
+                <SelectCountry region={region} setRegion={setRegion}/>
             </div>
 
-            <div className={"header"}>
-                <div><span className={"city"}> {response.title} </span> {response.title}</div>
-                <div className={"hours"}>
-                    <div><span
-                        className={"hours__title"}>Time</span> {response.time && format(new Date(response.time), "h:mm aaaa")}
-                    </div>
-                    <div><span
-                        className={"hours__title"}>Sunrise</span> {response.sun_rise && format(new Date(response.sun_rise), "h:mm aaaa")}
-                    </div>
-                    <div><span
-                        className={"hours__title"}>Sunset</span> {response.sun_set && format(new Date(response.sun_set), "h:mm aaaa")}
-                    </div>
-                </div>
-            </div>
+            <Header response={response}/>
 
             <div
                 className={"weather"}> {response.consolidated_weather && response.consolidated_weather.map((item,index) => (
-                    <ComponentForDay item={item} region={region} index={index} displayDate={true}/>
+                    <ComponentForDay item={item} region={region} index={index} displayDate={true} t={t}/>
 
             ))}</div>
 

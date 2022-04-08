@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {format} from "date-fns";
 import ComponentForDay from "./ComponentForDay";
 import BBC from "../images/BBC.png";
 import forecast from "../images/forecast.jpeg";
@@ -11,6 +10,9 @@ import weatherUnderground from "../images/weatherUnderground.png";
 import worldWeatherOnline from "../images/worldWeatherOnline.png";
 import Arrow from "@elsdoerfer/react-arrow";
 import Link from "react-router-dom/es/Link";
+import {useTranslation} from "react-i18next";
+import Header from "./Header";
+import SelectCountry from "./SelectCountry";
 
 export default (props) => {
 
@@ -18,7 +20,7 @@ export default (props) => {
     const index = props.match.params.index;
     const [region, setRegion] = useState(firstRegion);
     const [response, setResponse] = useState({});
-    console.log("by date", response);
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         (async function () {
@@ -42,37 +44,16 @@ export default (props) => {
                         <Arrow angle={270} length={30} style={{width: '30px'}}/>
                     </div>
                 </Link>
-                <select className={"select"} value={region} onChange={async (e) => {
-                    setRegion(e.target.value);
-                }}>
-                    <option value={""} disabled={true}> Select a country</option>
-                    <option value={"2459115"}> New York</option>
-                    <option value={"2442047"}> Los Angeles</option>
-                    <option value={"610264"}> Marseille</option>
-                    <option value={"753692"}> Barcelona</option>
-                    <option value={"721943"}> Rome</option>
-                </select>
+                <SelectCountry  region={region} setRegion={setRegion}/>
             </div>
 
-            <div className={"header"}>
-                <span className={"city"}> {response.title} </span>
-                <div className={"hours"}>
-                    <div><span
-                        className={"hours__title"}>Time</span> {response.time && format(new Date(response.time), "h:mm aaaa")}
-                    </div>
-                    <div><span
-                        className={"hours__title"}>Sunrise</span> {response.sun_rise && format(new Date(response.sun_rise), "h:mm aaaa")}
-                    </div>
-                    <div><span
-                        className={"hours__title"}>Sunset</span> {response.sun_set && format(new Date(response.sun_set), "h:mm aaaa")}
-                    </div>
-                </div>
-            </div>
+            <Header response={response}/>
+
 
             <div className={"middle"}>{response.consolidated_weather && <div className={"weather"}>
-                <ComponentForDay item={response.consolidated_weather[index]} region={region}/>
+                <ComponentForDay item={response.consolidated_weather[index]} region={region} t={t}/>
             </div>}
-                <div className={"sources"}><span className={"bold"}>Sources</span>
+                <div className={"sources"}><span className={"bold"}>{t("Sources")}</span>
                     {response.sources && response.sources.map(item => (
                         <div>
                             {item.title === "BBC" && <img className={"logo"} src={BBC}/>}

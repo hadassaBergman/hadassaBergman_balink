@@ -19,7 +19,7 @@ export default (props) => {
     }
 
     return(
-            <div>
+            <div className={"one-day"}>
                 {props.displayDate && <Link to={`/${props.region}/day/${props.index}`}>
                 <div className={"date"}>
                     {isToday(new Date(props.item.applicable_date)) && <>Today</>}
@@ -36,18 +36,18 @@ export default (props) => {
                 <div>Max:{Math.round(props.item.max_temp)}°C</div>
                 <div>Min:{Math.round(props.item.min_temp)}°C</div>
                 <br/>
-                <div><Arrow angle={Math.round(props.item.wind_direction)} length={20}
+                <div className={"arrow_with_angle"}><Arrow angle={Math.round(props.item.wind_direction)} length={20}
                             style={{width: '20px'}}/> {Math.round(props.item.wind_speed)}mph
                 </div>
                 <br/>
-                <div className={"bold"}>Humidity</div>
+                <div className={"bold"}>{props.t("Humidity")}</div>
                 <div>{props.item.humidity}%</div>
-                <div className={"bold"}>Visibility</div>
+                <div className={"bold"}>{props.t("Visibility")}</div>
                 <div>{Math.round(props.item.visibility * 10) / 10}miles</div>
-                <div className={"bold"}>Pressure</div>
+                <div className={"bold"}>{props.t("Pressure")}</div>
                 <div>{Math.round(props.item.air_pressure)}mb</div>
                 <br/>
-                <div className={"bold"}>Confidence</div>
+                <div className={"bold"}>{props.t("Confidence")}</div>
                 <div>{props.item.predictability}%</div>
             </div>
     )

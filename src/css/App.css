@@ -43,15 +43,22 @@
   margin-right: 2vw;
 }
 .weather{
-  font-size: small;
+  font-size:small;
   padding-left: 2vw;
   padding-right: 2vw;
   width: 96vw;
+  overflow-x: auto;
   display: flex;
   flex-flow: row;
   justify-content: space-between;
   align-items: flex-start;
+  white-space: nowrap;
 }
+
+.weather::-webkit-scrollbar {
+width: 3px;
+}
+
 
 .copyright{
   font-weight: bold;
@@ -70,9 +77,10 @@
   color: blue;
   font-size: medium;
 }
+
 .img{
-  width: 50px;
-  height: 50px;
+  width: 4vw;
+  height: 4vw;
   margin-right: 5px;
 }
 
@@ -85,8 +93,10 @@
 }
 
 .sources{
-  width:20vw;
+  width:30vw;
   margin-right: 20vw;
+  white-space: nowrap;
+
 }
 
 .link{
@@ -101,4 +111,12 @@
 .arrow{
   position:absolute;
   left: 2vw;
+}
+
+.one-day{
+  margin-right: 10px;
+}
+
+.arrow_with_angle{
+  height: 30px;
 }
